@@ -34,6 +34,18 @@ public class ManyToOneMappingTest {
 			//4. 조회2 (join psql)
 			testFindBook2( em );
 			
+			//5. 수정1
+			testUpdateBook( em );
+			
+			//6. 수정2
+			testUpdateBook2( em );
+			
+			//7. 관계 제거
+			testRemoveRelation( em );
+			
+			//8. 카테고리 제거
+			testRemoveCategory( em );
+			
 		} catch( Exception ex ) {
 			tx.rollback();
 			ex.printStackTrace();
@@ -44,6 +56,42 @@ public class ManyToOneMappingTest {
 		emf.close();
 	}
 
+	public static void testRemoveCategory( EntityManager em ) {
+		Book book2 = em.find( Book.class, 2L );
+		em.remove( book2 );
+		Book book3 = em.find( Book.class, 3L );
+		em.remove( book3 );
+		
+		Category category = em.find( Category.class, 4L );
+		em.remove( category );
+	}
+	
+	public static void testRemoveRelation( EntityManager em ) {
+		Book book = em.find( Book.class, 1L );
+		book.setCategory( null );
+	}
+	
+	public static void testUpdateBook( EntityManager em ) {
+		Category category = em.find( Category.class, 2L );
+		Book book = em.find( Book.class, 1L );
+		
+		book.setCategory( category );
+	}
+
+	public static void testUpdateBook2( EntityManager em ) {
+		Category category = new Category();
+		category.setName( "IT" );
+		em.persist( category );
+
+		TypedQuery<Book> query 
+			= em.createQuery( "select b from Book b", Book.class );
+		
+		List<Book> list = query.getResultList();
+		for( Book book : list ) {
+			book.setCategory( category );
+		}
+	}
+	
 	public static void testFindBook2( EntityManager em ) {
 		// PSQL join
 		String psql = "select b from Book b join b.category c where b.title = ?1";

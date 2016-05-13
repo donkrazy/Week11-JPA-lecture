@@ -32,7 +32,7 @@ public class Book {
 	private String test;
 
 	@ManyToOne
-	@JoinColumn( name = "category_no" )
+	@JoinColumn( name = "category_no", nullable = true )
 	private Category category;
 	
 	public String getTest() {
