@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -23,12 +25,15 @@ public class Book {
 	@Column( name = "price" )
 	private Long price;
 
-	@Column( name = "description", nullable = false )
+	@Column( name = "description", nullable = true )
 	private String description;
 	
 	@Transient
 	private String test;
-	
+
+	@ManyToOne
+	@JoinColumn( name = "category_no" )
+	private Category category;
 	
 	public String getTest() {
 		return test;
@@ -63,8 +68,18 @@ public class Book {
 	public void setPrice(Long price) {
 		this.price = price;
 	}
+	
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
 	@Override
 	public String toString() {
-		return "Book [no=" + no + ", title=" + title + ", price=" + price + "]";
+		return "Book [no=" + no + ", title=" + title + ", price=" + price + ", description=" + description + ", test="
+				+ test + ", category=" + category + "]";
 	}
 }

@@ -30,6 +30,7 @@ public class App {
 			// findOneAndRemoveLogic( em );
 			
 		} catch( Exception ex ) {
+			ex.printStackTrace();
 			tx.rollback();
 		}
 		
