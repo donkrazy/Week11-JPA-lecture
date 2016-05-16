@@ -74,7 +74,13 @@ public class Book {
 	}
 
 	public void setCategory(Category category) {
+		if( this.category != null ) {
+			this.category.getBooks().remove( this );
+		}
 		this.category = category;
+		if( category != null ) {
+			category.getBooks().add( this );
+		}
 	}
 
 	@Override
