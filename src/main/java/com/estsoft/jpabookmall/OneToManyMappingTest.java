@@ -23,10 +23,10 @@ public class OneToManyMappingTest {
 			//testInsertBooks( em );
 			
 			// 조회
-			testFindCategory( em );
+			//testFindCategory( em );
 			
 			// 저장
-			testSave( em );
+			testSaveBug( em );
 			
 			//저장( 가짜매핑, 주인이 아닌 엔티티가 관계를 저장)
 			//testSaveNonOwner( em );
@@ -74,6 +74,15 @@ public class OneToManyMappingTest {
 		
 		book10.setCategory( category10 );
 		book10.setCategory( category20 );
+		
+		//category10
+		List<Book> list = category10.getBooks();
+		System.out.println( list );
+		
+		System.out.println( "====================");
+		list = category20.getBooks();
+		System.out.println( list );
+		
 	}
 	
 	public static void testSave( EntityManager em ) {

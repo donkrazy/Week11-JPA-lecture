@@ -21,7 +21,21 @@
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>4.3.8.Final</version>
 		</dependency>
-		
+
+		<!-- queryDSL -->
+		<dependency>
+			<groupId>com.mysema.querydsl</groupId>
+			<artifactId>querydsl-jpa</artifactId>
+			<version>3.6.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.mysema.querydsl</groupId>
+			<artifactId>querydsl-apt</artifactId>
+			<version>3.6.2</version>
+			<scope>provided</scope>
+		</dependency>
+
 		<!-- MySQL JDBC Driver -->
 		<dependency>
 			<groupId>mysql</groupId>
@@ -38,4 +52,25 @@
 		</dependency>
 
 	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.mysema.maven</groupId>
+				<artifactId>apt-maven-plugin</artifactId>
+				<version>1.0.9</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>process</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>target/generated-sources/java</outputDirectory>
+							<processor>com.mysema.query.apt.jpa.JPAAnnotationProcessor</processor>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
 </project>
